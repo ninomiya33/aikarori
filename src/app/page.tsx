@@ -47,8 +47,7 @@ export default function Home() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ingredients })
       });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const data: any = await res.json();
+      const data = await res.json() as { recipes: { name: string; ingredients: string[]; calories: number }[] };
       if (!data.recipes || data.recipes.length === 0) throw new Error('献立生成に失敗しました');
       setRecipes(data.recipes);
       // 2. YouTube検索（最初のレシピ名で検索）
