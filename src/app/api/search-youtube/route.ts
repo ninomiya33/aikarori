@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
 
 // YouTube Data APIクライアントの初期化
-let youtube: any = null;
+let youtube: { search: { list: Function } } | null = null;
 
 try {
   if (process.env.YOUTUBE_API_KEY) {
@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
         // レシピ名と食材を使って検索クエリを作成
         const searchQuery = `${recipeName} レシピ 作り方`;
         
-        const response = await youtube.search.list({
+        const response = await youtube!.search.list({
           part: ['snippet'],
           q: searchQuery,
           type: ['video'],
