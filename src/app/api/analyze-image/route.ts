@@ -23,9 +23,9 @@ export async function POST(request: NextRequest) {
     // menuを配列化して返す（カンマ区切りやスペース区切り対応）
     let ingredients: string[] = [];
     if (typeof menu === 'string') {
-      ingredients = menu.split(/[,、\s]+/).map(s => s.trim()).filter(Boolean);
+      ingredients = menu.split(/[,、\s]+/).map((s: string) => s.trim()).filter(Boolean);
     } else if (Array.isArray(menu)) {
-      ingredients = menu;
+      ingredients = menu as string[];
     }
     if (ingredients.length === 0) {
       // デモデータ
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       ingredients
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('メニュー受信エラー:', error);
     const randomIndex = Math.floor(Math.random() * DEMO_INGREDIENTS.length);
     const demoIngredients = DEMO_INGREDIENTS[randomIndex];

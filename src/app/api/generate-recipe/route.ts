@@ -10,7 +10,7 @@ try {
       apiKey: process.env.OPENAI_API_KEY,
     });
   }
-} catch (error) {
+} catch {
   console.log('OpenAI APIの初期化に失敗しました。デモモードで動作します。');
 }
 
@@ -273,9 +273,7 @@ ${ingredientsList}
         } else {
           throw new Error('JSONが見つかりません');
         }
-      } catch (error) {
-        console.error('JSON解析エラー:', error);
-        
+      } catch {
         // フォールバック：デモ用のレシピを4つ返す
         const shuffled = [...DEMO_RECIPES].sort(() => 0.5 - Math.random());
         recipes = shuffled.slice(0, 4);
@@ -295,9 +293,7 @@ ${ingredientsList}
       });
     }
 
-  } catch (error) {
-    console.error('レシピ生成エラー:', error);
-    
+  } catch {
     // エラー時もデモレシピを4つ返す
     const shuffled = [...DEMO_RECIPES].sort(() => 0.5 - Math.random());
     const demoRecipes = shuffled.slice(0, 4);
@@ -349,7 +345,7 @@ ${ingredients.join('、')}
         } else {
           throw new Error('JSONが見つかりません');
         }
-      } catch (error) {
+      } catch {
         detail = {
           name: recipeName,
           detailedInstructions: [
@@ -373,7 +369,7 @@ ${ingredients.join('、')}
         tips: ['手順ごとに丁寧に進めると失敗しません。']
       });
     }
-  } catch (error) {
+  } catch {
     return NextResponse.json({
       name: recipeName,
       detailedInstructions: [

@@ -5,12 +5,12 @@ export default function Home() {
   const [input, setInput] = useState('');
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
-  const [recipes, setRecipes] = useState<any[]>([]);
+  const [recipes, setRecipes] = useState<{ name: string; ingredients: string[]; calories: number }[]>([]);
   const [expandedRecipe, setExpandedRecipe] = useState<number | null>(null);
-  const [videos, setVideos] = useState<any[]>([]);
-  const [error, setError] = useState('');
-  const [detailedRecipe, setDetailedRecipe] = useState<any | null>(null);
-  const [detailLoading, setDetailLoading] = useState(false);
+  const [videos, setVideos] = useState<{ id: string; title: string; thumbnail: string; channelTitle: string }[]>([]);
+  const [error, setError] = useState<string>('');
+  const [detailedRecipe, setDetailedRecipe] = useState<{ name: string; detailedInstructions: string[]; tips: string[] } | null>(null);
+  const [detailLoading, setDetailLoading] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // 食材追加
@@ -29,11 +29,6 @@ export default function Home() {
   // 食材削除
   const handleRemoveIngredient = (idx: number) => {
     setIngredients(prev => prev.filter((_, i) => i !== idx));
-  };
-
-  // レシピの展開/折りたたみ
-  const toggleRecipe = (index: number) => {
-    setExpandedRecipe(expandedRecipe === index ? null : index);
   };
 
   // メインAPI呼び出し
@@ -83,7 +78,7 @@ export default function Home() {
       });
       const data = await res.json();
       setDetailedRecipe(data);
-    } catch (e) {
+    } catch {
       setDetailedRecipe({
         name: recipes[index].name,
         detailedInstructions: ['手順の取得に失敗しました。'],

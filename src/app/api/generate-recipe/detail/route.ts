@@ -47,7 +47,7 @@ ${ingredients.join('、')}
         } else {
           throw new Error('JSONが見つかりません');
         }
-      } catch (error) {
+      } catch {
         detail = {
           name: recipeName,
           detailedInstructions: [
@@ -71,7 +71,7 @@ ${ingredients.join('、')}
         tips: ['手順ごとに丁寧に進めると失敗しません。']
       });
     }
-  } catch (error) {
+  } catch {
     return NextResponse.json({
       name: recipeName,
       detailedInstructions: [

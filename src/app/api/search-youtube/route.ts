@@ -11,7 +11,7 @@ try {
       auth: process.env.YOUTUBE_API_KEY
     });
   }
-} catch (error) {
+} catch {
   console.log('YouTube APIの初期化に失敗しました。デモモードで動作します。');
 }
 
@@ -48,7 +48,7 @@ const DEMO_VIDEOS = [
 
 export async function POST(request: NextRequest) {
   try {
-    const { recipeName, ingredients } = await request.json();
+    const { recipeName } = await request.json();
 
     if (!recipeName) {
       return NextResponse.json(
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
           relevanceLanguage: 'ja'
         });
 
-        const videos = response.data.items?.map((item: any) => ({
+        const videos = response.data.items?.map((item: { id: { videoId: string }; snippet: { title: string; thumbnails: { medium: { url: string } }; channelTitle: string; publishedAt: string; description: string } }) => ({
           id: item.id.videoId,
           title: item.snippet.title,
           thumbnail: item.snippet.thumbnails.medium.url,
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({
           videos: videos
         });
-      } catch (error) {
+      } catch {
         console.error('YouTube API エラー:', error);
         // エラー時はデモデータを返す
         return NextResponse.json({
@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
       });
     }
 
-  } catch (error) {
+  } catch {
     console.error('YouTube動画検索エラー:', error);
     
     return NextResponse.json({
