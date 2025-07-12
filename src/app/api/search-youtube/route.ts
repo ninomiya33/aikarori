@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
 
 // YouTube Data APIクライアントの初期化
-let youtube: { search: { list: Function } } | null = null;
+let youtube: any = null;
 
 try {
   if (process.env.YOUTUBE_API_KEY) {
