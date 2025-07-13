@@ -12,7 +12,7 @@ try {
       auth: process.env.YOUTUBE_API_KEY
     });
   }
-} catch {
+} catch (error) {
   console.log('YouTube APIの初期化に失敗しました。デモモードで動作します。');
 }
 
