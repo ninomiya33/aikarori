@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({
           videos: videos
         });
-      } catch {
+      } catch (error) {
         console.error('YouTube API エラー:', error);
         // エラー時はデモデータを返す
         return NextResponse.json({
@@ -122,7 +122,7 @@ export async function POST(request: NextRequest) {
       });
     }
 
-  } catch {
+  } catch (error) {
     console.error('YouTube動画検索エラー:', error);
     
     return NextResponse.json({
